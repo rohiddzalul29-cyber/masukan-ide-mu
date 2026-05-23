@@ -1,0 +1,599 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fakta Sejarah – Menjaga Api Sejarah Tetap Menyala</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Raleway:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --sand: #c9a97a;
+        --sand-lt: #e5d3b3;
+        --dark: #1a1208;
+        --cream: #f5ede0;
+        --border: rgba(201, 169, 122, 0.35);
+      }
+
+      html,
+      body {
+        height: 100%;
+        font-family: "Raleway", sans-serif;
+        overflow-x: hidden;
+      }
+
+      /* ── BACKGROUND ── */
+      .bg {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        background: url("Nama lengkap (1).png") center center / cover no-repeat;
+      }
+      .bg::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to right,
+          rgba(10, 7, 3, 0.78) 0%,
+          rgba(10, 7, 3, 0.42) 45%,
+          rgba(10, 7, 3, 0.15) 100%
+        );
+      }
+
+      /* ── PARTICLE SPARKS ── */
+      .sparks {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
+      .spark {
+        position: absolute;
+        bottom: -10px;
+        width: 2px;
+        height: 2px;
+        border-radius: 50%;
+        background: var(--sand);
+        opacity: 0;
+        animation: riseSpark var(--dur, 6s) var(--delay, 0s) infinite ease-in;
+      }
+      @keyframes riseSpark {
+        0% {
+          transform: translateY(0) translateX(0) scale(1);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.9;
+        }
+        80% {
+          opacity: 0.3;
+        }
+        100% {
+          transform: translateY(-100vh) translateX(var(--dx, 30px)) scale(0.2);
+          opacity: 0;
+        }
+      }
+
+      /* ── LAYOUT ── */
+      .page {
+        position: relative;
+        z-index: 1;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 40px 6vw;
+        gap: 40px;
+      }
+
+      /* ── LEFT BRAND ── */
+      .brand {
+        flex: 1 1 340px;
+        max-width: 440px;
+        color: var(--cream);
+      }
+
+      /* BIGGER LOGO */
+      .brand-logo {
+        width: 130px;
+        height: 130px;
+        margin-bottom: 28px;
+        opacity: 0.95;
+        filter: invert(1) brightness(1.15)
+          drop-shadow(0 0 18px rgba(201, 169, 122, 0.55));
+        display: block;
+
+        /* Entry animation */
+        animation: fadeDropIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+        animation-delay: 0.1s;
+      }
+
+      .brand h1 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(2.4rem, 4vw, 3.6rem);
+        font-weight: 300;
+        letter-spacing: 0.01em;
+        line-height: 1.1;
+        color: var(--sand-lt);
+        margin-bottom: 14px;
+
+        animation: fadeSlideUp 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+        animation-delay: 0.25s;
+      }
+
+      .brand > p:first-of-type {
+        font-family: "Cinzel", serif;
+        font-size: 0.68rem;
+        letter-spacing: 0.22em;
+        color: var(--sand);
+        text-transform: uppercase;
+        opacity: 0.85;
+
+        animation: fadeSlideUp 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+        animation-delay: 0.35s;
+      }
+
+      .brand-line {
+        width: 60px;
+        height: 1px;
+        background: var(--sand);
+        margin: 28px 0;
+        opacity: 0.6;
+        transform-origin: left center;
+
+        animation: expandLine 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+        animation-delay: 0.48s;
+      }
+
+      .brand-desc {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.05rem;
+        font-style: italic;
+        color: rgba(245, 237, 224, 0.7);
+        line-height: 1.65;
+        max-width: 320px;
+
+        animation: fadeSlideUp 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+        animation-delay: 0.55s;
+      }
+
+      /* ── FORM CARD ── */
+      .card {
+        flex: 0 0 auto;
+        width: min(480px, 95vw);
+        background: rgba(255, 255, 255, 0.97);
+        border-radius: 4px;
+        border: 1px solid var(--sand-lt);
+        padding: 44px 40px 36px;
+        box-shadow:
+          0 24px 80px rgba(0, 0, 0, 0.5),
+          0 4px 12px rgba(0, 0, 0, 0.2);
+        position: relative;
+        overflow: hidden;
+
+        /* Entry animation */
+        animation: cardReveal 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+        animation-delay: 0.2s;
+      }
+
+      /* CLEARER watermark logo */
+      .card-watermark {
+        position: absolute;
+        width: 240px;
+        height: 240px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0.11; /* was 0.06 — more visible */
+        pointer-events: none;
+        object-fit: contain;
+        filter: sepia(1) saturate(0.6) brightness(0.55);
+      }
+
+      .card-title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 2rem;
+        font-weight: 600;
+        color: var(--dark);
+        margin-bottom: 28px;
+        letter-spacing: 0.01em;
+      }
+
+      /* ── FORM FIELDS ── */
+      .field {
+        margin-bottom: 18px;
+        position: relative;
+      }
+      .field label {
+        display: block;
+        font-size: 0.82rem;
+        font-weight: 500;
+        color: #2c1f0e;
+        margin-bottom: 6px;
+        letter-spacing: 0.01em;
+      }
+      .field input,
+      .field textarea {
+        width: 100%;
+        border: 1.5px solid #d4c5ae;
+        border-radius: 3px;
+        padding: 10px 13px;
+        font-family: "Raleway", sans-serif;
+        font-size: 0.88rem;
+        color: #2c1f0e;
+        background: #fff;
+        outline: none;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+        position: relative;
+        z-index: 1;
+      }
+      .field input:focus,
+      .field textarea:focus {
+        border-color: var(--sand);
+        box-shadow: 0 0 0 3px rgba(201, 169, 122, 0.18);
+      }
+      .field input::placeholder,
+      .field textarea::placeholder {
+        color: #b0a090;
+        font-style: italic;
+      }
+      .field textarea {
+        height: 90px;
+        resize: vertical;
+      }
+
+      /* optional tag */
+      .opt-tag {
+        font-size: 0.7rem;
+        color: #a08060;
+        font-weight: 400;
+        margin-left: 5px;
+        letter-spacing: 0;
+      }
+
+      /* divider */
+      .or-divider {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 4px 0 18px;
+        color: #b0a090;
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
+      }
+      .or-divider::before,
+      .or-divider::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: #e0d4c2;
+      }
+
+      /* submit */
+      .btn-submit {
+        width: 100%;
+        padding: 13px;
+        background: var(--sand);
+        border: none;
+        border-radius: 3px;
+        font-family: "Cinzel", serif;
+        font-size: 0.82rem;
+        letter-spacing: 0.14em;
+        color: #fff;
+        cursor: pointer;
+        margin-top: 8px;
+        transition:
+          background 0.2s,
+          transform 0.15s,
+          box-shadow 0.2s;
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+      }
+      .btn-submit::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          120deg,
+          transparent 30%,
+          rgba(255, 255, 255, 0.25) 50%,
+          transparent 70%
+        );
+        transform: translateX(-100%);
+        transition: transform 0.55s ease;
+      }
+      .btn-submit:hover::after {
+        transform: translateX(100%);
+      }
+      .btn-submit:hover {
+        background: #b8905c;
+        transform: translateY(-1px);
+        box-shadow: 0 6px 20px rgba(201, 169, 122, 0.4);
+      }
+      .btn-submit:active {
+        transform: translateY(0);
+      }
+      .btn-submit.loading {
+        pointer-events: none;
+        opacity: 0.75;
+      }
+
+      .card-note {
+        text-align: center;
+        font-size: 0.7rem;
+        color: #a08870;
+        margin-top: 14px;
+        line-height: 1.5;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* ── SUCCESS TOAST ── */
+      .toast {
+        position: fixed;
+        bottom: 32px;
+        left: 50%;
+        transform: translateX(-50%) translateY(80px);
+        background: #2c1f0e;
+        color: var(--sand-lt);
+        font-family: "Cinzel", serif;
+        font-size: 0.78rem;
+        letter-spacing: 0.1em;
+        padding: 14px 28px;
+        border-radius: 3px;
+        border: 1px solid var(--sand);
+        z-index: 999;
+        opacity: 0;
+        transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      .toast.show {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+      }
+
+      /* ── KEYFRAMES ── */
+      @keyframes fadeDropIn {
+        from {
+          opacity: 0;
+          transform: translateY(-28px) scale(0.88);
+        }
+        to {
+          opacity: 0.95;
+          transform: translateY(0) scale(1);
+        }
+      }
+      @keyframes fadeSlideUp {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes expandLine {
+        from {
+          transform: scaleX(0);
+          opacity: 0;
+        }
+        to {
+          transform: scaleX(1);
+          opacity: 0.6;
+        }
+      }
+      @keyframes cardReveal {
+        from {
+          opacity: 0;
+          transform: translateX(40px) scale(0.97);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0) scale(1);
+        }
+      }
+
+      /* ── RESPONSIVE ── */
+      @media (max-width: 860px) {
+        .page {
+          flex-direction: column;
+          justify-content: center;
+          padding: 32px 5vw 40px;
+        }
+        .brand {
+          text-align: center;
+          max-width: 100%;
+        }
+        .brand-logo {
+          margin-left: auto;
+          margin-right: auto;
+          width: 110px;
+          height: 110px;
+        }
+        .brand-line {
+          margin: 20px auto;
+        }
+        .brand-desc {
+          margin: 0 auto;
+        }
+        .card {
+          width: 100%;
+          padding: 32px 24px 28px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg"></div>
+
+    <!-- Floating sparks -->
+    <div class="sparks" id="sparks"></div>
+
+    <div class="page">
+      <!-- LEFT: BRAND -->
+      <div class="brand">
+        <img class="brand-logo" src="logo fakta.png" alt="Logo Fakta Sejarah" />
+        <h1>Fakta Sejarah</h1>
+        <p>Menjaga api sejarah tetap menyala</p>
+        <div class="brand-line"></div>
+        <p class="brand-desc">
+          Punya ide konten atau artikel sejarah yang ingin kamu bagikan?
+          Sampaikan idemu atau kirim tulisanmu di sini — bersama kita jaga api
+          sejarah tetap menyala.
+        </p>
+      </div>
+
+      <!-- RIGHT: FORM — connected to Formspree -->
+      <div class="card">
+        <img class="card-watermark" src="logo fakta.png" alt="" />
+
+        <div class="card-title">Form pengisian</div>
+
+        <div class="field">
+          <label>Masukan nama mu</label>
+          <input type="text" id="nama" placeholder="Nama lengkap kamu..." />
+        </div>
+
+        <div class="field">
+          <label>Apa ide mu? <span class="opt-tag">(opsional)</span></label>
+          <textarea
+            id="ide"
+            placeholder="Ceritakan ide konten atau topik sejarah yang ingin kamu bahas..."
+          ></textarea>
+        </div>
+
+        <div class="field">
+          <label>Masukan email atau nomor Hp</label>
+          <input
+            type="text"
+            id="kontak"
+            placeholder="email@kamu.com atau 08xxxxxxxxxx"
+          />
+        </div>
+
+        <button class="btn-submit" id="btnSubmit" onclick="submitForm()">
+          KIRIM
+        </button>
+
+        <p class="card-note">
+          Data kamu aman bersama kami. Jangan pernah mengirimkan kata sandi.
+        </p>
+      </div>
+    </div>
+
+    <div class="toast" id="toast">
+      ✦ Terima kasih! Ide kamu sudah kami terima ✦
+    </div>
+
+    <script>
+      /* ── SPARKS ── */
+      const sparksEl = document.getElementById("sparks");
+      for (let i = 0; i < 22; i++) {
+        const s = document.createElement("div");
+        s.className = "spark";
+        const size = Math.random() * 3 + 1.5;
+        s.style.cssText = `
+          left: ${Math.random() * 100}%;
+          width: ${size}px;
+          height: ${size}px;
+          --dur: ${5 + Math.random() * 7}s;
+          --delay: ${Math.random() * 8}s;
+          --dx: ${(Math.random() - 0.5) * 60}px;
+          opacity: 0;
+        `;
+        sparksEl.appendChild(s);
+      }
+
+      /* ── SUBMIT → FORMSPREE ── */
+      async function submitForm() {
+        const nama = document.getElementById("nama").value.trim();
+        const kontak = document.getElementById("kontak").value.trim();
+        const ide = document.getElementById("ide").value.trim();
+        const btn = document.getElementById("btnSubmit");
+
+        if (!nama) {
+          shake("nama");
+          return;
+        }
+        if (!kontak) {
+          shake("kontak");
+          return;
+        }
+        if (!ide) {
+          shake("ide");
+          alert("Silakan isi ide konten kamu.");
+          return;
+        }
+
+        const formData = new FormData();
+        formData.append("nama", nama);
+        formData.append("kontak", kontak);
+        formData.append("ide", ide);
+
+        btn.textContent = "MENGIRIM...";
+        btn.classList.add("loading");
+
+        try {
+          const res = await fetch("https://formspree.io/f/mzdwzaok", {
+            method: "POST",
+            body: formData,
+            headers: { Accept: "application/json" },
+          });
+
+          if (res.ok) {
+            showToast();
+            resetForm();
+          } else {
+            const data = await res.json().catch(() => ({}));
+            alert(
+              data?.errors?.[0]?.message || "Terjadi kesalahan. Coba lagi ya.",
+            );
+          }
+        } catch (err) {
+          alert("Gagal terhubung ke server. Periksa koneksi internet kamu.");
+        } finally {
+          btn.textContent = "KIRIM";
+          btn.classList.remove("loading");
+        }
+      }
+
+      function showToast() {
+        const toast = document.getElementById("toast");
+        toast.classList.add("show");
+        setTimeout(() => toast.classList.remove("show"), 3500);
+      }
+
+      function resetForm() {
+        document.getElementById("nama").value = "";
+        document.getElementById("ide").value = "";
+        document.getElementById("kontak").value = "";
+      }
+
+      function shake(id) {
+        const el = document.getElementById(id);
+        el.style.borderColor = "#c0392b";
+        el.style.boxShadow = "0 0 0 3px rgba(192,57,43,0.18)";
+        setTimeout(() => {
+          el.style.borderColor = "";
+          el.style.boxShadow = "";
+        }, 700);
+        el.focus();
+      }
+    </script>
+  </body>
+</html>
